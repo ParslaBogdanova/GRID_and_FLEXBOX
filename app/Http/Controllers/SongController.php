@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Playlist;
 use App\Models\Song;
 
 class SongController extends Controller
@@ -11,20 +12,14 @@ class SongController extends Controller
     public function index()
     {
         $songs = Song::all();
-        return view('song.index', compact('songs'));
+        return view('song.index', ['songs'=>$songs]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
        return view('song.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $request->validate([
@@ -39,32 +34,20 @@ class SongController extends Controller
             'genre' => $request->input('genre')
         ]);
 
-        return redirect('/song'); //--------------Šo vajadzēs samainīt!!!!!!
+        return redirect('/song');
     }
-
-    /**
-     * Display the specified resource.
-     */
     public function show(Song $song)
     {
-       return view('song.show', ['song' => $song]);
+        $allPlaylists=Playlist::all();
+       return view('song.show', ['song' => $song, 'allPlaylists'=>$allPlaylists]);
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit($id)
     {
-        // Retrieve the playlist by its ID
         $song = Song::findOrFail($id);
 
-        // Pass the playlist to the view
         return view('song.edit', ['song' => $song]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, $id)
     {
         $request->validate([
@@ -73,27 +56,39 @@ class SongController extends Controller
             'genre' => 'required'
         ]);
 
-        if ($request->user()->id == auth()->user()->id) {
             Song::where('id', $id)
                 ->update([
                     'title' => $request->input('title'),
                     'artist' => $request->input('artist'),
                     'genre' => $request->input('genre')
         ]);
+
+    return redirect('/song');
     }
 
-    return redirect('/song'); //--------------Šo vajadzēs samainīt!!!!!!
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy($id)
     {
         $song = Song::where('id', $id);
 
         $song->delete();
 
-        return redirect('/song'); //--------------Šo vajadzēs samainīt!!!!!!
+        return redirect('/song');
+    }
+
+    public function addPlaylist(Request $request, Song $song)
+    {
+        if ($song->playlists->contains($request['playlist'])) {
+            return redirect()->back()->with('error', 'This song already exists in the playlist');
+        }
+
+        $song->playlists()->attach($request['playlist']);
+        return redirect('/song/' . $song->id)->with('success', 'Song is added to the playlist!');
+    }
+    public function removePlaylist(Request $request, Song $song)
+    {
+        
+        $song->playlists()->detach($request['playlist']);
+        return redirect('/song/' . $song->id)->with('success', 'This song has been removed grom the playlist!');
+
     }
 }
