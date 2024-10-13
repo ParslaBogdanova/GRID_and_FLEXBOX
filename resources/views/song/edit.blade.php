@@ -7,17 +7,24 @@
 
             <div class="form-group">
                 <label for="name" class="block text-sm font-medium text-gray-700">Title</label>
-                <input value="{{ $song->title }}" type="text" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" id="name" name="title" required>
+                <input value="{{ $song->title }}" type="text"
+                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                    id="name" name="title" required>
             </div>
             <div class="form-group">
                 <label for="tag" class="block text-sm font-medium text-gray-700">Artist</label>
-                <input value="{{ $song->genre }}" type="text" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" id="tag" name="artist" required>
+                <input value="{{ $song->genre }}" type="text"
+                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                    id="tag" name="artist" required>
             </div>
             <div class="form-group">
                 <label for="tag" class="block text-sm font-medium text-gray-700">Genre</label>
-                <input value="{{ $song->genre }}" type="text" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" id="tag" name="genre" required>
+                <input value="{{ $song->genre }}" type="text"
+                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                    id="tag" name="genre" required>
             </div>
-            <button type="submit" class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+            <button type="submit"
+                class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
                 Edit Song
             </button>
         </form>
